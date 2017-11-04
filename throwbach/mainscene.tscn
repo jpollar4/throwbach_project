@@ -1,17 +1,10 @@
-[gd_scene load_steps=8 format=1]
+[gd_scene load_steps=6 format=1]
 
 [ext_resource path="res://mainscene.gd" type="Script" id=1]
 [ext_resource path="res://trumpet1.ogg" type="AudioStream" id=2]
 [ext_resource path="res://Brandenburg_Concerto_No_3.ogg" type="AudioStream" id=3]
-[ext_resource path="res://icon.png" type="Texture" id=4]
-[ext_resource path="res://Bach.tscn" type="PackedScene" id=5]
-[ext_resource path="res://GUI.gd" type="Script" id=6]
-
-[sub_resource type="LineShape2D" id=1]
-
-custom_solver_bias = 0.0
-normal = Vector2( 0, -1 )
-d = 0.0
+[ext_resource path="res://game_parts.tscn" type="PackedScene" id=4]
+[ext_resource path="res://GUI.gd" type="Script" id=5]
 
 [node name="mainscene" type="Node2D"]
 
@@ -39,65 +32,7 @@ stream/paused = false
 stream/loop_restart_time = 0.0
 stream/buffering_ms = 500
 
-[node name="game_parts" type="Node2D" parent="."]
-
-[node name="icon" type="Sprite" parent="game_parts"]
-
-transform/pos = Vector2( 11.3734, -955.669 )
-transform/rot = 0.0534822
-transform/scale = Vector2( 29.7693, 46.2006 )
-texture = ExtResource( 4 )
-modulate = Color( 0.210938, 0.0140076, 0.0140076, 1 )
-
-[node name="icon1" type="Sprite" parent="game_parts"]
-
-transform/pos = Vector2( 56.1075, -5021.4 )
-transform/scale = Vector2( 29.7693, 82.6521 )
-texture = ExtResource( 4 )
-modulate = Color( 0.131356, 0.00846863, 0.433594, 1 )
-
-[node name="Bach" parent="game_parts" instance=ExtResource( 5 )]
-
-[node name="Camera2D" type="Camera2D" parent="game_parts"]
-
-anchor_mode = 1
-rotating = false
-current = true
-zoom = Vector2( 1, 1 )
-limit/left = -10000000
-limit/top = -10000000
-limit/right = 10000000
-limit/bottom = 10000000
-drag_margin/h_enabled = true
-drag_margin/v_enabled = true
-smoothing/enable = true
-smoothing/speed = 5.0
-drag_margin/left = 0.2
-drag_margin/top = 0.2
-drag_margin/right = 0.2
-drag_margin/bottom = 0.2
-
-[node name="StaticBody2D" type="StaticBody2D" parent="game_parts"]
-
-transform/pos = Vector2( -2.50858, 93.7376 )
-input/pickable = false
-shapes/0/shape = SubResource( 1 )
-shapes/0/transform = Matrix32( 10, 0, 0, 2.23424, 10.0702, -32.0884 )
-shapes/0/trigger = false
-collision/layers = 1
-collision/mask = 1
-constant_linear_velocity = Vector2( 0, 0 )
-constant_angular_velocity = 0.0
-friction = 1.0
-bounce = 0.0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="game_parts/StaticBody2D"]
-
-transform/pos = Vector2( 10.0702, -32.0884 )
-transform/scale = Vector2( 10, 2.23424 )
-shape = SubResource( 1 )
-trigger = false
-_update_shape_index = 0
+[node name="game_parts" parent="." instance=ExtResource( 4 )]
 
 [node name="Control" type="Control" parent="."]
 
@@ -111,7 +46,7 @@ margin/left = 64.0
 margin/top = 0.0
 margin/right = 63.0
 margin/bottom = 1.0
-script/script = ExtResource( 6 )
+script/script = ExtResource( 5 )
 
 [node name="score" type="RichTextLabel" parent="Control"]
 
@@ -123,9 +58,9 @@ focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = -378.0
+margin/left = -382.0
 margin/top = 284.0
-margin/right = -497.0
+margin/right = -501.0
 margin/bottom = 244.0
 bbcode/enabled = false
 bbcode/bbcode = "test
@@ -143,13 +78,69 @@ focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = -383.0
-margin/top = 257.0
-margin/right = -502.0
-margin/bottom = 217.0
+margin/left = -384.0
+margin/top = 258.0
+margin/right = -503.0
+margin/bottom = 218.0
 bbcode/enabled = false
 bbcode/bbcode = "test
 "
+visible_characters = -1
+percent_visible = 1.0
+
+[node name="HowToScreen" type="Panel" parent="Control"]
+
+editor/display_folded = true
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = -515.0
+margin/top = -301.0
+margin/right = 523.0
+margin/bottom = 311.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control/HowToScreen"]
+
+rect/scale = Vector2( 2, 2 )
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 252.0
+margin/top = 101.0
+margin/right = 517.0
+margin/bottom = 141.0
+bbcode/enabled = true
+bbcode/bbcode = "[center]How To Play[/center]"
+visible_characters = -1
+percent_visible = 1.0
+
+[node name="SplashScreen" type="Panel" parent="Control"]
+
+editor/display_folded = true
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = -515.0
+margin/top = -301.0
+margin/right = 523.0
+margin/bottom = 311.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control/SplashScreen"]
+
+rect/scale = Vector2( 2, 2 )
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 252.0
+margin/top = 101.0
+margin/right = 517.0
+margin/bottom = 141.0
+bbcode/enabled = true
+bbcode/bbcode = "[center]Throw Bach[/center]"
 visible_characters = -1
 percent_visible = 1.0
 

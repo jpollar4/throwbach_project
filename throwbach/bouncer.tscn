@@ -35,4 +35,20 @@ shape = SubResource( 1 )
 trigger = true
 _update_shape_index = 0
 
+[node name="score" type="RichTextLabel" parent="."]
+
+rect/scale = Vector2( 5, 5 )
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = -78.0
+margin/top = 61.0
+margin/right = 18.0
+margin/bottom = 77.0
+bbcode/enabled = true
+bbcode/bbcode = "double"
+visible_characters = -1
+percent_visible = 1.0
+
 
