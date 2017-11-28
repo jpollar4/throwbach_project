@@ -5,8 +5,8 @@ extends Control
 # var b = "textvar"
 func _process(delta):
 	set_pos(get_owner().get_node("game_parts/Camera2D").get_camera_screen_center ( ) );
-	get_node("score").set_text(String(get_node("/root/mainscene").cur_score))
-	get_node("highscore").set_text(String(get_node("/root/mainscene").high_score))
+	get_node("score").set_bbcode(str(get_node("/root/mainscene").cur_score));
+	get_node("highscore").set_bbcode(str(get_node("/root/mainscene").high_score))
 	
 	
 func _ready():

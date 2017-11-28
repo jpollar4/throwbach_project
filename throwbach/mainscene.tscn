@@ -48,6 +48,18 @@ margin/right = 63.0
 margin/bottom = 1.0
 script/script = ExtResource( 5 )
 
+[node name="score_panel" type="Panel" parent="Control"]
+
+visibility/opacity = 0.7
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 374.0
+margin/top = -301.0
+margin/right = 523.0
+margin/bottom = -229.0
+
 [node name="score" type="RichTextLabel" parent="Control"]
 
 anchor/left = 1
@@ -90,7 +102,6 @@ percent_visible = 1.0
 
 [node name="HowToScreen" type="Panel" parent="Control"]
 
-editor/display_folded = true
 focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
@@ -118,7 +129,6 @@ percent_visible = 1.0
 
 [node name="SplashScreen" type="Panel" parent="Control"]
 
-editor/display_folded = true
 focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2

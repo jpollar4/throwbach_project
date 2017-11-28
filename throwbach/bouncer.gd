@@ -12,7 +12,8 @@ func _process(delta):
 	if(isDead):
 		set_pos(get_pos() + Vector2(0,delta*100))
 		die_time += delta
-		get_node("Sprite").set_modulate(Color(1,1,1,.7-die_time))
+		get_node("Trumpet").set_modulate(Color(1,1,1,.7-die_time))
+		get_node("Tuba").set_modulate(Color(1,1,1,.7-die_time))
 		if(die_time > .5):
 			queue_free()
 		return;
@@ -27,7 +28,7 @@ func _process(delta):
 		set_pos(get_pos() + Vector2(0,delta*50))
 	
 	if(node):
-		if (node.cur_score * -1 < get_pos().y -400 or get_pos().y > -20):
+		if (node.cur_score * -1 < get_pos().y -400 or get_pos().y > -200):
 			queue_free()
 	else:
 		print("what")
@@ -42,8 +43,8 @@ func _ready():
 func handleHit(score):
 	get_node("score").show()
 	if(isDoublePoints):
-		get_node("score").set_text("double!")
+		get_node("score").set_bbcode("double!")
 	else:
-		get_node("score").set_text(String(score))
+		get_node("score").set_bbcode(str(score))
 	isDead = true;
 	

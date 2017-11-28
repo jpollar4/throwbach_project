@@ -14,7 +14,7 @@ var save_path = "user://savegame.save";
 var isGameOver = false;
 
 func _input(ev):
-	var bach = get_node("game_parts/Bach")
+	
 	if ev.type == InputEvent.MOUSE_BUTTON and ev.button_index == BUTTON_LEFT and ev.pressed:
 		if(!Globals.get("seenSplashScreen")):
 			Globals.set("seenSplashScreen", true)
@@ -25,13 +25,25 @@ func _input(ev):
 			get_node("Control/HowToScreen").set_hidden(true);
 			return;
 		if(!bLaunched):
-			#ThrowBach!
-			bLaunched = true;
-			bach.apply_impulse(Vector2(0,0), Vector2(0,-520));
-			bach.set_max_contacts_reported(1);
-			bach.set_contact_monitor(true);
+			get_node("game_parts/Cannon").handle_click()
+			
 		if (isGameOver):
+			print("RELOAD")
+			get_node("audio").stop();
 			get_tree().reload_current_scene()
+
+func launch_bach():
+	if(!bLaunched):
+		var bach = get_node("game_parts/Bach")
+		#ThrowBach!
+		bLaunched = true;
+		createMoreBouncers();
+		bach.apply_impulse(Vector2(0,0), Vector2(get_global_mouse_pos().x,-1020));
+		bach.set_max_contacts_reported(1);
+		bach.set_contact_monitor(true);
+		get_node("game_parts/Bach").show();
+	return;
+
 
 func create_save():
 	var savegame = File.new() #file
@@ -64,44 +76,47 @@ func _process(delta):
 	if (bach.get_pos().y * -1 > max_height):
 		max_height = bach.get_pos().y * -1
 	
-	if (bach.get_pos().y * -1 < max_height - 500):
+	if (bach.get_pos().y * -1 < max_height - 500 || (bach.get_pos().y * -1 < 100 && max_height > 100)):
 		if (cur_score > high_score):
 			create_save()
 		sound.set_stream(load("res://fail.ogg"))
 		sound.play()
 		isGameOver = true
 		
-	var diff = abs(get_global_mouse_pos().x - bach.get_pos().x)
-	if(diff > 2):
-		if(get_global_mouse_pos().x > bach.get_pos().x):
-			if (bach.get_linear_velocity().x < 0):
-				stop_back_left_right(bach)
-			bach.set_applied_force(Vector2(500,0));
+	if(bLaunched):
+		var diff = abs(get_global_mouse_pos().x - bach.get_pos().x)
+		if(diff > 2):
+			bach.set_applied_force(Vector2((get_global_mouse_pos().x - bach.get_pos().x)*10,0));
+			if(get_global_mouse_pos().x > bach.get_pos().x):
+				if (bach.get_linear_velocity().x < 0):
+					stop_back_left_right(bach)
+			else:
+				if (bach.get_linear_velocity().x > 0):
+					stop_back_left_right(bach)
 		else:
-			if (bach.get_linear_velocity().x > 0):
-				stop_back_left_right(bach)
-			bach.set_applied_force(Vector2(-500,0));
-	else:
-		stop_back_left_right(bach)
+			stop_back_left_right(bach)
+		
 
-	camera.set_pos(Vector2(0,bach.get_pos().y));
+	camera.set_pos(Vector2(0,bach.get_pos().y-100));
 
-	if(!bach.get_colliding_bodies().empty()): 
+	if(bLaunched && !bach.get_colliding_bodies().empty()): 
 		if(bach.get_colliding_bodies()[0].get_name().find("bouncer") != -1 && !bach.get_colliding_bodies()[0].isDead):
 			bach.set_linear_velocity(Vector2(0,0))
-			bach.apply_impulse(Vector2(0,0), Vector2(0,rand_range(-500, -600)));
-			sound.set_stream(load("res://trumpet" + String(cur_trumpet) + ".ogg"))
+			bach.apply_impulse(Vector2(0,0), Vector2(0,rand_range(-600, -700)));
+			
 			cur_trumpet +=1;
 			if(cur_trumpet == 4):
 				cur_trumpet= 1
-			sound.play()
 			if(bach.get_colliding_bodies()[0].isDoublePoints):
 				cur_score *= 2
 				bach.get_colliding_bodies()[0].handleHit(num_bouncers_hit)
+				sound.set_stream(load("res://tuba.ogg"))
 			else:
+				sound.set_stream(load("res://trumpet" + str(cur_trumpet) + ".ogg"))
 				cur_score += num_bouncers_hit
 				bach.get_colliding_bodies()[0].handleHit(num_bouncers_hit)
 				num_bouncers_hit += 1;
+			sound.play()
 
 	if (bach.get_pos().y < last_bouncer_height+1000):
 		createMoreBouncers()
@@ -120,11 +135,13 @@ func createDoublePointer(pos):
 	var scene_instance = bouncer_scene.instance()
 	scene_instance.set_pos(pos);
 	scene_instance.isDoublePoints = true
-	scene_instance.get_node("Sprite").set_modulate(Color(0,1,1,1))
+	#scene_instance.get_node("Sprite").set_modulate(Color(0,1,1,1))
+	scene_instance.get_node("Tuba").show();
+	scene_instance.get_node("Trumpet").hide();
 	var new_node = get_node("game_parts").add_child(scene_instance)
 
 func createMoreBouncers():
-	
+	last_bouncer_height = 0;
 	var temp_height = 0;
 	var cur_bouncer_pos_x = rand_range(-400, 400);
 	for child in get_node("game_parts").get_children():
@@ -132,23 +149,29 @@ func createMoreBouncers():
 			last_bouncer_height = child.get_pos().y;
 			cur_bouncer_pos_x = child.get_pos().x;
 	
-	var num_bouncers = (15 - (cur_score/10));
+	#var num_bouncers = (15 - (cur_score/10));
+	var num_bouncers = 10;
 	if (num_bouncers <= 5):
 		num_bouncers = 5;
 		
-	print (num_bouncers)
+	var max_distance = int((last_bouncer_height/-1000)) + 5;
+	print (max_distance)
 	randomize()
 	for i in range(num_bouncers):
 		createBouncer(Vector2(cur_bouncer_pos_x,last_bouncer_height))
-		cur_bouncer_pos_x +=  ((randi() % 20) - 10) * 25;
-		if (cur_bouncer_pos_x > 400 or cur_bouncer_pos_x < -400):
-			cur_bouncer_pos_x = 0
-		if (rand_range(0, 100) > 70):
-			createBouncer(Vector2(rand_range(-400, 400),last_bouncer_height))
-		last_bouncer_height += -1200/num_bouncers
+		#cur_bouncer_pos_x +=  ((randi()%max_distance) - int(max_distance/2))*50;
+		cur_bouncer_pos_x +=  int(rand_range(-max_distance, max_distance) * 70);
+		if cur_bouncer_pos_x < -400:
+			cur_bouncer_pos_x = -350;
+		if cur_bouncer_pos_x > 400:
+			cur_bouncer_pos_x = 350;
+			#cur_bouncer_pos_x = (((randi() % 19)+1) - 10) * 50;
+		#if (rand_range(0, 100) > 90):
+		#	createBouncer(Vector2(rand_range(-400, 400),last_bouncer_height))
+		last_bouncer_height += -125;
 
 	createDoublePointer(Vector2(cur_bouncer_pos_x,last_bouncer_height))
-	last_bouncer_height += -1200/num_bouncers
+	#last_bouncer_height += -1200/num_bouncers
 
 
 func _ready():
@@ -157,7 +180,7 @@ func _ready():
 	bouncer_scene = load("res://bouncer.tscn");
 	read_savegame()
 	createMoreBouncers()
-	
+	get_node("game_parts/Bach").hide();
 	if(Globals.get("seenSplashScreen")):
 		get_node("Control/SplashScreen").set_hidden(true);
 

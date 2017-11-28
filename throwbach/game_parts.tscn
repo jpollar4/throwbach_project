@@ -1,7 +1,25 @@
-[gd_scene load_steps=4 format=1]
+[gd_scene load_steps=22 format=1]
 
-[ext_resource path="res://icon.png" type="Texture" id=1]
-[ext_resource path="res://Bach.tscn" type="PackedScene" id=2]
+[ext_resource path="res://bachground.jpg" type="Texture" id=1]
+[ext_resource path="res://bachground_top.jpg" type="Texture" id=2]
+[ext_resource path="res://cloud 1 dark.png" type="Texture" id=3]
+[ext_resource path="res://cloud 2 dark.png" type="Texture" id=4]
+[ext_resource path="res://cloud 3 dark.png" type="Texture" id=5]
+[ext_resource path="res://cloud 3 medium.png" type="Texture" id=6]
+[ext_resource path="res://cloud 2 medium.png" type="Texture" id=7]
+[ext_resource path="res://cloud 1 medium.png" type="Texture" id=8]
+[ext_resource path="res://cloud 1 white.png" type="Texture" id=9]
+[ext_resource path="res://cloud 3 light.png" type="Texture" id=10]
+[ext_resource path="res://cloud 2 light.png" type="Texture" id=11]
+[ext_resource path="res://ground.png" type="Texture" id=12]
+[ext_resource path="res://cobblestone 2.png" type="Texture" id=13]
+[ext_resource path="res://cobblestone 1.png" type="Texture" id=14]
+[ext_resource path="res://tudor house 2.png" type="Texture" id=15]
+[ext_resource path="res://tudor house 3.png" type="Texture" id=16]
+[ext_resource path="res://tudor house 1.png" type="Texture" id=17]
+[ext_resource path="res://church.png" type="Texture" id=18]
+[ext_resource path="res://Cannon.tscn" type="PackedScene" id=19]
+[ext_resource path="res://Bach.tscn" type="PackedScene" id=20]
 
 [sub_resource type="LineShape2D" id=1]
 
@@ -13,26 +31,233 @@ d = 0.0
 
 [node name="icon" type="Sprite" parent="."]
 
-transform/pos = Vector2( 11.3734, -955.669 )
+transform/pos = Vector2( -512.292, -1722.04 )
 transform/rot = 0.0534822
-transform/scale = Vector2( 29.7693, 46.2006 )
 texture = ExtResource( 1 )
-modulate = Color( 0.210938, 0.0140076, 0.0140076, 1 )
+centered = false
 
-[node name="icon1" type="Sprite" parent="."]
+[node name="bachground_top" type="Sprite" parent="."]
 
-transform/pos = Vector2( 56.1075, -5021.4 )
-transform/scale = Vector2( 29.7693, 82.6521 )
-texture = ExtResource( 1 )
-modulate = Color( 0.131356, 0.00846863, 0.433594, 1 )
+transform/pos = Vector2( 0.283234, -10120.9 )
+transform/scale = Vector2( 1, 1684.42 )
+texture = ExtResource( 2 )
 
-[node name="Bach" parent="." instance=ExtResource( 2 )]
+[node name="clouds" type="Node2D" parent="."]
 
+editor/display_folded = true
+transform/pos = Vector2( -194.99, -870.647 )
+
+[node name="dark clouds" type="Node2D" parent="clouds"]
+
+editor/display_folded = true
+
+[node name="cloud 1 dark" type="Sprite" parent="clouds/dark clouds"]
+
+transform/pos = Vector2( -268.319, -115.934 )
+texture = ExtResource( 3 )
+
+[node name="cloud 1 dark1" type="Sprite" parent="clouds/dark clouds"]
+
+transform/pos = Vector2( 175.338, -832.123 )
+texture = ExtResource( 3 )
+
+[node name="cloud 2 dark" type="Sprite" parent="clouds/dark clouds"]
+
+transform/pos = Vector2( 422.854, 3.96057 )
+texture = ExtResource( 4 )
+
+[node name="cloud 2 dark1" type="Sprite" parent="clouds/dark clouds"]
+
+transform/pos = Vector2( -52.4922, -604.483 )
+texture = ExtResource( 4 )
+
+[node name="cloud 3 dark" type="Sprite" parent="clouds/dark clouds"]
+
+transform/pos = Vector2( 127.21, -376.175 )
+texture = ExtResource( 5 )
+
+[node name="cloud 3 dark1" type="Sprite" parent="clouds/dark clouds"]
+
+transform/pos = Vector2( 532.839, -1269.83 )
+texture = ExtResource( 5 )
+
+[node name="medium clouds" type="Node2D" parent="clouds"]
+
+editor/display_folded = true
+
+[node name="cloud 3 medium" type="Sprite" parent="clouds/medium clouds"]
+
+transform/pos = Vector2( 289.157, -2434.49 )
+transform/scale = Vector2( 1.06377, 1.04948 )
+texture = ExtResource( 6 )
+
+[node name="cloud 3 medium1" type="Sprite" parent="clouds/medium clouds"]
+
+transform/pos = Vector2( 405.079, -2782.43 )
+transform/scale = Vector2( 1.07453, 1.04948 )
+texture = ExtResource( 6 )
+
+[node name="cloud 2 medium" type="Sprite" parent="clouds/medium clouds"]
+
+transform/pos = Vector2( 106.017, -1979.84 )
+transform/scale = Vector2( 0.996107, 1 )
+texture = ExtResource( 7 )
+
+[node name="cloud 2 medium1" type="Sprite" parent="clouds/medium clouds"]
+
+transform/pos = Vector2( 201.919, -2865.46 )
+transform/scale = Vector2( 0.996107, 1 )
+texture = ExtResource( 7 )
+
+[node name="cloud 1 medium" type="Sprite" parent="clouds/medium clouds"]
+
+transform/pos = Vector2( 261.746, -1546.47 )
+texture = ExtResource( 8 )
+
+[node name="cloud 1 medium1" type="Sprite" parent="clouds/medium clouds"]
+
+transform/pos = Vector2( -1.37395, -2478.83 )
+texture = ExtResource( 8 )
+
+[node name="white clouds" type="Node2D" parent="clouds"]
+
+[node name="cloud 1 white" type="Sprite" parent="clouds/white clouds"]
+
+transform/pos = Vector2( 196.346, -4147.21 )
+texture = ExtResource( 9 )
+
+[node name="cloud 1 white2 2" type="Sprite" parent="clouds/white clouds"]
+
+transform/pos = Vector2( 546.506, -6147.02 )
+texture = ExtResource( 9 )
+
+[node name="cloud 1 white1" type="Sprite" parent="clouds/white clouds"]
+
+transform/pos = Vector2( 390.88, -5221.04 )
+texture = ExtResource( 9 )
+
+[node name="cloud 1 white2" type="Sprite" parent="clouds/white clouds"]
+
+transform/pos = Vector2( 48.5002, -7057.44 )
+texture = ExtResource( 9 )
+
+[node name="cloud 3 light" type="Sprite" parent="clouds/white clouds"]
+
+transform/pos = Vector2( 419.096, -3561.95 )
+texture = ExtResource( 10 )
+
+[node name="cloud 3 light2 2" type="Sprite" parent="clouds/white clouds"]
+
+transform/pos = Vector2( -16.6594, -5577.32 )
+texture = ExtResource( 10 )
+
+[node name="cloud 3 light1" type="Sprite" parent="clouds/white clouds"]
+
+transform/pos = Vector2( 6.68469, -4713.59 )
+texture = ExtResource( 10 )
+
+[node name="cloud 3 light2" type="Sprite" parent="clouds/white clouds"]
+
+transform/pos = Vector2( -234.537, -6386.58 )
+texture = ExtResource( 10 )
+
+[node name="cloud 2 light" type="Sprite" parent="clouds/white clouds"]
+
+transform/pos = Vector2( 102.162, -3283.53 )
+texture = ExtResource( 11 )
+
+[node name="cloud 2 light2 2" type="Sprite" parent="clouds/white clouds"]
+
+transform/pos = Vector2( 312.259, -5742.44 )
+texture = ExtResource( 11 )
+
+[node name="cloud 2 light1" type="Sprite" parent="clouds/white clouds"]
+
+transform/pos = Vector2( 226.664, -4606.36 )
+texture = ExtResource( 11 )
+
+[node name="cloud 2 light2" type="Sprite" parent="clouds/white clouds"]
+
+transform/pos = Vector2( 623.513, -6543.92 )
+texture = ExtResource( 11 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+transform/pos = Vector2( -2.50858, 93.7376 )
+input/pickable = false
+shapes/0/shape = SubResource( 1 )
+shapes/0/transform = Matrix32( 10, 0, 0, 2.23424, 8.70987, -32.0884 )
+shapes/0/trigger = false
+collision/layers = 1
+collision/mask = 1
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 0.0
+bounce = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+
+transform/pos = Vector2( 8.70987, -32.0884 )
+transform/scale = Vector2( 10, 2.23424 )
+shape = SubResource( 1 )
+trigger = false
+_update_shape_index = 0
+
+[node name="Sprite" type="Sprite" parent="StaticBody2D"]
+
+transform/pos = Vector2( -4.02832, 161.423 )
+transform/scale = Vector2( 1.02899, 5.58244 )
+texture = ExtResource( 12 )
+
+[node name="Sprite" type="Sprite" parent="StaticBody2D/Sprite"]
+
+transform/pos = Vector2( 61.9039, -27.2016 )
+transform/scale = Vector2( 1.61369, 0.284637 )
+texture = ExtResource( 13 )
+
+[node name="Sprite1" type="Sprite" parent="StaticBody2D/Sprite"]
+
+transform/pos = Vector2( 94.9475, -34.0463 )
+transform/scale = Vector2( 1.38392, 0.244109 )
+texture = ExtResource( 14 )
+
+[node name="tudor house 2" type="Sprite" parent="."]
+
+transform/pos = Vector2( -453.759, -107.996 )
+transform/rot = 0.0534822
+texture = ExtResource( 15 )
+
+[node name="tudor house 3" type="Sprite" parent="."]
+
+transform/pos = Vector2( 158.908, -136.222 )
+texture = ExtResource( 16 )
+
+[node name="tudor house 1 2" type="Sprite" parent="."]
+
+transform/pos = Vector2( 400.01, -89.3605 )
+transform/rot = 0.0534822
+texture = ExtResource( 17 )
+
+[node name="church" type="Sprite" parent="."]
+
+transform/pos = Vector2( -165.879, -179.919 )
+transform/rot = 0.0534822
+texture = ExtResource( 18 )
+
+[node name="Cannon" parent="." instance=ExtResource( 19 )]
+
+transform/pos = Vector2( -69.0597, 17.8114 )
+transform/scale = Vector2( 0.5, 0.5 )
+
+[node name="Bach" parent="." instance=ExtResource( 20 )]
+
+transform/pos = Vector2( -83.0797, 27.6932 )
 mass = 1.02041
-gravity_scale = 7.0
+gravity_scale = 10.0
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
+transform/pos = Vector2( -0.00012207, -118.661 )
 anchor_mode = 1
 rotating = false
 current = true
@@ -49,34 +274,5 @@ drag_margin/left = 0.2
 drag_margin/top = 0.2
 drag_margin/right = 0.2
 drag_margin/bottom = 0.2
-
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
-
-transform/pos = Vector2( -2.50858, 93.7376 )
-input/pickable = false
-shapes/0/shape = SubResource( 1 )
-shapes/0/transform = Matrix32( 10, 0, 0, 2.23424, 10.0702, -32.0884 )
-shapes/0/trigger = false
-collision/layers = 1
-collision/mask = 1
-constant_linear_velocity = Vector2( 0, 0 )
-constant_angular_velocity = 0.0
-friction = 0.0
-bounce = 0.0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-
-transform/pos = Vector2( 10.0702, -32.0884 )
-transform/scale = Vector2( 10, 2.23424 )
-shape = SubResource( 1 )
-trigger = false
-_update_shape_index = 0
-
-[node name="Sprite" type="Sprite" parent="StaticBody2D"]
-
-transform/pos = Vector2( 1.15228, 112.649 )
-transform/scale = Vector2( 16.0181, 4.5203 )
-texture = ExtResource( 1 )
-modulate = Color( 0, 0, 0, 1 )
 
 
