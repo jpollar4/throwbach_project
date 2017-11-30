@@ -28,7 +28,7 @@ func _process(delta):
 		set_pos(get_pos() + Vector2(0,delta*50))
 	
 	if(node):
-		if (node.cur_score * -1 < get_pos().y -400 or get_pos().y > -200):
+		if (node.max_height * -1 < get_pos().y -200 or get_pos().y > -200):
 			queue_free()
 	else:
 		print("what")
@@ -43,8 +43,8 @@ func _ready():
 func handleHit(score):
 	get_node("score").show()
 	if(isDoublePoints):
-		get_node("score").set_bbcode("double!")
+		get_node("score").set_text("double!")
 	else:
-		get_node("score").set_bbcode(str(score))
+		get_node("score").set_text(str(score))
 	isDead = true;
 	

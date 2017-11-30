@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=1]
+[gd_scene load_steps=6 format=1]
 
 [ext_resource path="res://bouncer.gd" type="Script" id=1]
 [ext_resource path="res://trumpet.png" type="Texture" id=2]
 [ext_resource path="res://tuba.png" type="Texture" id=3]
+[ext_resource path="res://bold_font.fnt" type="BitmapFont" id=4]
 
 [sub_resource type="SegmentShape2D" id=1]
 
@@ -43,20 +44,23 @@ shape = SubResource( 1 )
 trigger = true
 _update_shape_index = 0
 
-[node name="score" type="RichTextLabel" parent="."]
+[node name="score" type="Label" parent="."]
 
-rect/scale = Vector2( 5, 5 )
-focus/ignore_mouse = false
+rect/scale = Vector2( 0.2, 0.2 )
+focus/ignore_mouse = true
 focus/stop_mouse = true
 size_flags/horizontal = 2
-size_flags/vertical = 2
-margin/left = -78.0
-margin/top = 61.0
-margin/right = 18.0
-margin/bottom = 77.0
-bbcode/enabled = true
-bbcode/bbcode = "double"
-visible_characters = -1
+size_flags/vertical = 0
+margin/left = -130.0
+margin/top = 57.0
+margin/right = 1148.0
+margin/bottom = 424.0
+custom_fonts/font = ExtResource( 4 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "double"
+align = 1
 percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
 
 

@@ -8,10 +8,13 @@ var last_bouncer_height = 0;
 var max_height = 0;
 var cur_score = 0;
 var num_bouncers_hit = 1;
-var cur_trumpet = 1;
+var cur_trumpet = 0;
 var high_score = 0;
 var save_path = "user://savegame.save";
 var isGameOver = false;
+
+var fail_sound;
+var bach_puns = [];
 
 func _input(ev):
 	
@@ -20,10 +23,10 @@ func _input(ev):
 			Globals.set("seenSplashScreen", true)
 			get_node("Control/SplashScreen").set_hidden(true);
 			return;
-		if(!Globals.get("seenHowToScreen")):
-			Globals.set("seenHowToScreen", true)
-			get_node("Control/HowToScreen").set_hidden(true);
-			return;
+		#if(!Globals.get("seenHowToScreen")):
+		#	Globals.set("seenHowToScreen", true)
+		#	get_node("Control/HowToScreen").set_hidden(true);
+		#	return;
 		if(!bLaunched):
 			get_node("game_parts/Cannon").handle_click()
 			
@@ -79,9 +82,13 @@ func _process(delta):
 	if (bach.get_pos().y * -1 < max_height - 500 || (bach.get_pos().y * -1 < 100 && max_height > 100)):
 		if (cur_score > high_score):
 			create_save()
-		sound.set_stream(load("res://fail.ogg"))
+		sound.set_stream(fail_sound)
 		sound.play()
 		isGameOver = true
+		get_node("Control/endscorepanel").show();
+		get_node("Control/endscorepanel/score").set_text(str(cur_score));
+		get_node("Control/endscorepanel/highscore").set_text(str(high_score));
+		get_node("Control/endscorepanel/bachpun").set_text(bach_puns[randi() % bach_puns.size()]);
 		
 	if(bLaunched):
 		var diff = abs(get_global_mouse_pos().x - bach.get_pos().x)
@@ -105,18 +112,18 @@ func _process(delta):
 			bach.apply_impulse(Vector2(0,0), Vector2(0,rand_range(-600, -700)));
 			
 			cur_trumpet +=1;
-			if(cur_trumpet == 4):
-				cur_trumpet= 1
+			if(cur_trumpet == 3):
+				cur_trumpet = 0
 			if(bach.get_colliding_bodies()[0].isDoublePoints):
 				cur_score *= 2
 				bach.get_colliding_bodies()[0].handleHit(num_bouncers_hit)
-				sound.set_stream(load("res://tuba.ogg"))
+				get_node("SamplePlayer").play("tuba");
 			else:
-				sound.set_stream(load("res://trumpet" + str(cur_trumpet) + ".ogg"))
+				get_node("SamplePlayer").play("trumpet" + str(cur_trumpet + 1), true);
+				
 				cur_score += num_bouncers_hit
 				bach.get_colliding_bodies()[0].handleHit(num_bouncers_hit)
 				num_bouncers_hit += 1;
-			sound.play()
 
 	if (bach.get_pos().y < last_bouncer_height+1000):
 		createMoreBouncers()
@@ -155,12 +162,16 @@ func createMoreBouncers():
 		num_bouncers = 5;
 		
 	var max_distance = int((last_bouncer_height/-1000)) + 5;
-	print (max_distance)
 	randomize()
 	for i in range(num_bouncers):
 		createBouncer(Vector2(cur_bouncer_pos_x,last_bouncer_height))
 		#cur_bouncer_pos_x +=  ((randi()%max_distance) - int(max_distance/2))*50;
-		cur_bouncer_pos_x +=  int(rand_range(-max_distance, max_distance) * 70);
+		if cur_bouncer_pos_x < -300:
+			cur_bouncer_pos_x +=  int(rand_range(0, max_distance) * 70);
+		elif cur_bouncer_pos_x > 300:
+			cur_bouncer_pos_x +=  int(rand_range(-max_distance,0) * 70);
+		else:
+			cur_bouncer_pos_x +=  int(rand_range(-max_distance, max_distance) * 70);
 		if cur_bouncer_pos_x < -400:
 			cur_bouncer_pos_x = -350;
 		if cur_bouncer_pos_x > 400:
@@ -181,11 +192,37 @@ func _ready():
 	read_savegame()
 	createMoreBouncers()
 	get_node("game_parts/Bach").hide();
+	get_node("Control/endscorepanel").hide();
 	if(Globals.get("seenSplashScreen")):
 		get_node("Control/SplashScreen").set_hidden(true);
 
 	if(Globals.get("seenHowToScreen")):
 		get_node("Control/HowToScreen").set_hidden(true);
+	
+	
+	fail_sound = load("res://fail.ogg");
+	
+	
+	bach_puns.append("Bach in a minuet.");
+	bach_puns.append("We got your Bach.");
+	bach_puns.append("Holla Bach, girl.");
+	bach_puns.append("Have you seen Baroque Bach Mountain?");
+	bach_puns.append("It's the Bachness Monster!");
+	bach_puns.append("My Bach is worse than my bite.");
+	bach_puns.append("I love Bach 'n' Roll.");
+	bach_puns.append("We just Bach'd your world.");
+	bach_puns.append("It’s a Bachbuster.");
+	bach_puns.append("No turning Bach now.");
+	bach_puns.append("We'll be Bach.");
+	bach_puns.append("Eh, what's up Bach?");
+	bach_puns.append("Dude. Bach off.");
+	bach_puns.append("We're bringing sexy Bach.");
+	bach_puns.append("Right Bach atcha.");
+	bach_puns.append("Bach like an Egyptian.");
+	bach_puns.append("I wanna Bach and roll all night.");
+	bach_puns.append("We're the new kids on the Bach.");
+
+	
 	
 	
 	set_process_input(true)
